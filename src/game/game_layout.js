@@ -16,8 +16,6 @@ class Render {
 
 
 	activate(state){
-		if (this.game_activity.classList.contains('reversed')) this.game_activity.classList.remove('reversed')
-		else this.game_activity.classList.add('reversed')
 		if (arguments.length===0)this.render_activity_top(this.buttons)
 		else this.render_activity_top(state,true)
 	}
@@ -37,11 +35,14 @@ class Render {
 			buttons_array = reverse_array
 		}
 
-		if (this.game_activity.children[0]) this.game_activity.removeChild(this.game_activity.children[0])
+		if (this.game_activity.children[0]) {
+			this.game_activity.classList.toggle('reversed')
+			this.game_activity.removeChild(this.game_activity.children[0])
+		}
 		this.game_activity.style.backgroundImage = this.background
 		
 		const game_layout = document.createElement('div')
-		game_layout.id='game_layout'
+		game_layout.classList='game_layout'
 
 		// debugger
 		for (let i in buttons_array) {
@@ -65,8 +66,9 @@ class Render {
 		this.game_activity.appendChild(game_layout)
 		this.event_dispatcher(this.game_activity)
 		this.reverse_button.onclick=()=>{
-			this.state_update = document.getElementById('game_layout').children
-			this.activate(this.state)
+			game_layout.classList.add('anim-in')
+			this.state_update = document.getElementsByClassName('game_layout')[0].children
+			setTimeout(()=>this.activate(this.state),200)
 		}
 
 	}
@@ -87,7 +89,7 @@ class Render {
 		elem.dispatchEvent(this.event)
 	}
 
-	set state_update(array){
+	set state_update(array){//here u can optimaize the CODE
 		const state = []
 		let i = 0
 		for (let row of array){
@@ -110,6 +112,7 @@ class Render {
 class ButtonLogic {
 	constructor(){
 		this.all_buttons = (()=>document.getElementsByTagName('input'))()
+		this.secret_state = new Set()
 	}
 
 	setListenersCheckbox(){
@@ -121,12 +124,12 @@ class ButtonLogic {
 		const array = []
 		if(!e.target.checked) e.preventDefault()
 		else e.target.parentElement.classList.add('button-clicked')
-		if (e.target.dataset.secret1) { debugger
+		if (e.target.parentElement.dataset.secret1) { debugger
 			const currVal = document.querySelector('label[data-secret1='+e.target.dataset.secret1+']')
 			const lowerVal = document.querySelector('label[data-secret1='+(e.target.dataset.secret1-1)+']') || false
 			if (!loverVal) {
 				e.target.parentElement.classList.add('secret-clicked')
-			} //TODO create "secret counter" if liver value - add to arr, if lover already in array - check if it next val from lower
+			} //TODO ad counter that checks position of progress secrets and saves smth like state??
 		}
 		// console.log(e.target.checked)
 	}
@@ -137,6 +140,11 @@ class ButtonLogic {
 			button.parentElement.classList.remove('button-clicked')
 		}
 	}
+
+	set secretSetter(secret){
+		this.secret_state.add(secret)
+	}
+
 }
 
 
@@ -162,4 +170,4 @@ gameFieldOne.activate()
 
 
 
-//TODO create "secret counter" if liver value - add to arr, if lover already in array - check if it next val from lower
+//TODO ad counter that checks position of progress secrets and saves smth like state??
