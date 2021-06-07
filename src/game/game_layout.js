@@ -53,10 +53,12 @@ class Render {
 				const button = this.add_button()
 				if (buttons_array[i][j].secret !== '' ){
 					button.dataset.secret1 = buttons_array[i][j].secret
-					if (buttons_array[i][j].clicked) button.classList.add('button-clicked')
+					if (buttons_array[i][j].disabled) button.classList.add('button-disabled')
+					else if(buttons_array[i][j].clicked) button.classList.add('button-clicked')
 					line.append(button)
 				} else {
-					if (buttons_array[i][j].clicked) button.classList.add('button-clicked')
+					if (buttons_array[i][j].disabled) button.classList.add('button-disabled')
+					else if(buttons_array[i][j].clicked) button.classList.add('button-clicked')
 					line.append(button)
 				}
 			}
@@ -96,7 +98,8 @@ class Render {
 			state.push([])
 			for (let elem of row.children){
 				state[i].push({
-					'clicked':elem.classList.value ? true : false,
+					'clicked':elem.classList.contains('button-clicked') ? true : false,
+					'disabled':elem.classList.contains('button-disabled') ? true : false,
 					'secret':elem.dataset.secret1 ? elem.dataset.secret1 : '',
 				})
 			}
@@ -117,21 +120,24 @@ class ButtonLogic {
 
 	setListenersCheckbox(){
 
-		for (const button of this.all_buttons) button.addEventListener('click',this.listenerEvent)
+		for (const button of this.all_buttons) {
+			if (!button.classList.contains('disabled')) button.addEventListener('click',this.listenerEvent)
+		}
 	}
 
 	listenerEvent(e){ /*debugger*/
 		const array = []
 		if(!e.target.checked) e.preventDefault()
 		else e.target.parentElement.classList.add('button-clicked')
-		if (e.target.parentElement.dataset.secret1) { debugger
-			const currVal = document.querySelector('label[data-secret1='+e.target.dataset.secret1+']')
-			const lowerVal = document.querySelector('label[data-secret1='+(e.target.dataset.secret1-1)+']') || false
-			if (!loverVal) {
-				e.target.parentElement.classList.add('secret-clicked')
-			} //TODO ad counter that checks position of progress secrets and saves smth like state??
-		}
-		// console.log(e.target.checked)
+		if (!e.target.parentElement.classList.contains('button-disabled')){}
+	// 	if (e.target.parentElement.dataset.secret1) { debugger
+	// 		const currVal = document.querySelector('label[data-secret1='+e.target.dataset.secret1+']')
+	// 		const lowerVal = document.querySelector('label[data-secret1='+(e.target.dataset.secret1-1)+']') || false
+	// 		if (!loverVal) {
+	// 			e.target.parentElement.classList.add('secret-clicked')
+	// 		} //TODO ad counter that checks position of progress secrets and saves smth like state??
+	// 	}
+	// 	// console.log(e.target.checked)
 	}
 
 	flipBoardOver(){
