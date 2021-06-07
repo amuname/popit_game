@@ -22,78 +22,96 @@ const game_fields = {
 			    [
 			        {
 			            "clicked": false,
+			            "disabled": true,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": "2"
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": "8"
 			        },
 			    ],
 			    [
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": "1"
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
-			        {
-			            "clicked": false,
+			        {	
+			        	"clicked": false,
+			            "disabled": true,
 			            "secret": "4"
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": "7"
 			        },
 			    ],
 			    [
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": "3"
 			        },
 			        {
@@ -102,40 +120,49 @@ const game_fields = {
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": "6"
 			        },
 			    ],
 			    [
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			        {
 			            "clicked": false,
+			            "disabled": false,
 			            "secret": ""
 			        },
 			    ]
