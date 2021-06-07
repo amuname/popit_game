@@ -67,3 +67,8 @@ input[type=checkbox]{
     transition: transform 0.6s cubic-bezier(0.21, 1.24, 0.35, 0.99);
     transform: translateX(-100%) rotateY(-180deg);
 }
+.button-disabled{
+	background-color: inherit;
+	box-shadow: none;
+	border: none;
+}
