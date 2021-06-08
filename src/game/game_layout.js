@@ -17,32 +17,21 @@ class Render {
 
 	activate(state){
 		if (arguments.length===0)this.render_activity_top(this.buttons)
-		else this.render_activity_top(state,true)
+		else this.render_activity_top(state)
 	}
 
-	render_activity_top(buttons_array,reverse){
+	render_activity_top(buttons_array){
 		if (arguments.length===0) throw new Error('Args error: No arguments')
-		if (reverse) {
-			const reverse_array = []
-			for(let row of buttons_array) {
-				const reverse_row = row.reverse()
-				for (let elem of reverse_row) {
-					if (elem.clicked) elem.clicked = false 
-					else elem.clicked = true
-				}
-				reverse_array.push(reverse_row)
-			}
-			buttons_array = reverse_array
-		}
 
-		if (this.game_activity.children[0]) {
-			this.game_activity.classList.toggle('reversed')
-			this.game_activity.removeChild(this.game_activity.children[0])
-		}
 		this.game_activity.style.backgroundImage = this.background
 		
 		const game_layout = document.createElement('div')
-		game_layout.classList='game_layout'
+		const leftside = document.createElement('div')
+		const rightside = document.createElement('div')
+		leftside.id = 'leftside'
+		rightside.id = 'rightside'
+		game_layout.classList.add('game_layout')
+		game_layout.classList.add('anim-out') //when anim-out be ready
 
 		// debugger
 		for (let i in buttons_array) {
@@ -65,12 +54,20 @@ class Render {
 			game_layout.appendChild(line)
 		}
 
+		game_layout.appendChild(leftside)
+		game_layout.appendChild(rightside)
+
+		if (this.game_activity.children[0]) {
+			this.game_activity.classList.toggle('reversed')
+			this.game_activity.removeChild(this.game_activity.children[0])
+		}
 		this.game_activity.appendChild(game_layout)
+		setTimeout(()=>game_layout.classList.remove('anim-out'),200) //when anim-out be ready
 		this.event_dispatcher(this.game_activity)
 		this.reverse_button.onclick=()=>{
-			game_layout.classList.add('anim-in')
 			this.state_update = document.getElementsByClassName('game_layout')[0].children
-			setTimeout(()=>this.activate(this.state),200)
+			game_layout.classList.add('anim-in')
+			game_layout.onanimationend = ()=>this.activate(this.nextState)
 		}
 
 	}
@@ -95,6 +92,7 @@ class Render {
 		const state = []
 		let i = 0
 		for (let row of array){
+			if (row.id =='leftside' || row.id =='rightside' ) break
 			state.push([])
 			for (let elem of row.children){
 				state[i].push({
@@ -107,6 +105,19 @@ class Render {
 		}
 		this.state = state
 
+	}
+
+	get nextState(){
+		const reverse_array = []
+		for(let row of this.state) {
+			const reverse_row = row.reverse()
+			for (let elem of reverse_row) {
+				if (elem.clicked) elem.clicked = false 
+				else elem.clicked = true
+			}
+			reverse_array.push(reverse_row)
+		}
+		return reverse_array
 	}
 
 }
@@ -127,17 +138,15 @@ class ButtonLogic {
 
 	listenerEvent(e){ /*debugger*/
 		const array = []
-		if(!e.target.checked) e.preventDefault()
+		if(!e.target.checked || e.target.parentElement.classList.contains('button-disabled') ) e.preventDefault()
 		else e.target.parentElement.classList.add('button-clicked')
-		if (!e.target.parentElement.classList.contains('button-disabled')){}
-	// 	if (e.target.parentElement.dataset.secret1) { debugger
-	// 		const currVal = document.querySelector('label[data-secret1='+e.target.dataset.secret1+']')
-	// 		const lowerVal = document.querySelector('label[data-secret1='+(e.target.dataset.secret1-1)+']') || false
-	// 		if (!loverVal) {
-	// 			e.target.parentElement.classList.add('secret-clicked')
-	// 		} //TODO ad counter that checks position of progress secrets and saves smth like state??
-	// 	}
-	// 	// console.log(e.target.checked)
+		// if (e.target.parentElement.dataset.secret1) { debugger
+		// 	const currVal = document.querySelector('label[data-secret1='+e.target.dataset.secret1+']')
+		// 	const lowerVal = document.querySelector('label[data-secret1='+(e.target.dataset.secret1-1)+']') || false
+		// 	if (!loverVal) {
+		// 		e.target.parentElement.classList.add('secret-clicked')
+		// 	} //TODO ad counter that checks position of progress secrets and saves smth like state??
+		// }
 	}
 
 	flipBoardOver(){
