@@ -54,7 +54,7 @@ class Render {
 			game_layout.appendChild(line)
 		}
 
-		game_layout.appendChild(leftside)
+		game_layout.appendChild(leftside)//TODO перенести эти поля и анимацию элементов переворота на game-activity
 		game_layout.appendChild(rightside)
 
 		if (this.game_activity.children[0]) {
