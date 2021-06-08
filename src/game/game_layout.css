@@ -21,20 +21,26 @@ body{
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
+	transition: ease-out;
 }
 label{
-    width:40px;
+	width:40px;
 	height:40px;
-	border-radius:50%;
 	padding: 13px;
 	margin:5px;
+	border-radius:50%;
 	background: #9a1c9a;
     border: 1px solid #a21aa2;
     box-shadow: 0px 2px 0 #8b198b, 2px 4px 6px #681768;
-    font-weight: 900;
-    letter-spacing: 1px;
     transition: all 150ms cubic-bezier(0.02, 0.5, 0.91, 0.84);
 }
+
+
+/*label:after{
+	position: absolute;
+    content: '';	
+    transform: translateZ(10px);
+}*/
 input[type=checkbox]{
 	display:none;
 }
@@ -62,13 +68,76 @@ input[type=checkbox]{
 	border: 1px solid #ffff4c;
 	box-shadow: 2px 2px 3px 2px #a9b13e, 1px 3px 1px #d1e054;
 }
+@keyframes flip{
+	0%
+	{
+		transform:perspective(600px) scaleX(1) translateZ(0);
+		transform-style: preserve-3d;
+		animation-timing-function:ease-out
+	}
+	40%
+	{
+		transform:perspective(600px) scale3d(1,.95,.95) translateZ(150px) rotateY(-0.15turn);
+		transform-style: preserve-3d;
+		animation-timing-function:ease-out
+	}
+	100%
+	{
+		transform:perspective(600px) scale3d(.95,.95,.95) translateZ(150px) rotateY(-0.25turn);
+		transform-style: preserve-3d;
+		animation-timing-function:ease-out
+	}
+}
 .anim-in{
-	transform-origin: center right;
-    transition: transform 0.6s cubic-bezier(0.21, 1.24, 0.35, 0.99);
-    transform: translateX(-100%) rotateY(-180deg);
+    animation-duration:.3s;
+    backface-visibility:visible;
+    animation-name:flip;
 }
 .button-disabled{
 	background-color: inherit;
 	box-shadow: none;
 	border: none;
+}
+@keyframes flip-out{
+	0%
+	{
+		transform: perspective(600px) scale3d(.95,.95,.95) translateZ(150px) rotateY(-0.75turn);
+		transform-style: preserve-3d;
+		animation-timing-function:ease-out
+	}
+	40%
+	{
+		transform:perspective(600px) scale3d(1,.95,.95) translateZ(150px) rotateY(-0.85turn);
+		transform-style: preserve-3d;
+		animation-timing-function:ease-out
+	}
+	100%
+	{
+		transform:perspective(600px) scaleX(1) translateZ(0) rotateY(-1turn);
+		transform-style: preserve-3d;
+		animation-timing-function:ease-out
+	}
+}
+.game_layout.anim-out{/* idk how to make it*/
+	animation-duration:.2s;
+    backface-visibility:visible;
+    animation-name:flip-out;
+}
+#leftside, #rightside{
+    width: 30px;
+    height: 200px;
+    transform: perspective(0px) translateX(5em) translateZ(-15px) rotateY(-120deg);
+    background: yellowgreen;
+}
+#rightside{
+	margin: 0 -270px 0 0;
+}
+#leftside{
+	margin: -200px 580px -200px 0;
+}
+.reversed #leftside, .reversed  #rightside{
+    width: 30px;
+    height: 200px;
+    transform: perspective(0px) translateX(5em) translateZ(15px) rotateY(120deg);
+    background: #789e29;
 }
