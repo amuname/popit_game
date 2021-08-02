@@ -26,10 +26,10 @@ class Render {
 		this.game_activity.style.backgroundImage = this.background
 		
 		const game_layout = document.createElement('div')
-		const leftside = document.createElement('div')
-		const rightside = document.createElement('div')
-		leftside.id = 'leftside'
-		rightside.id = 'rightside'
+		// const leftside = document.createElement('div')
+		// const rightside = document.createElement('div')
+		// leftside.id = 'leftside'
+		// rightside.id = 'rightside'
 		game_layout.classList.add('game_layout')
 		game_layout.classList.add('anim-out') //when anim-out be ready
 
@@ -54,8 +54,8 @@ class Render {
 			game_layout.appendChild(line)
 		}
 
-		game_layout.appendChild(leftside)//TODO убрать есполезные поля и снизу и 3д анимацию, одычную оставить и сверстать все в 2д  
-		game_layout.appendChild(rightside)
+		// game_layout.appendChild(leftside)//TODO убрать есполезные поля и снизу и 3д анимацию, одычную оставить и сверстать все в 2д  
+		// game_layout.appendChild(rightside)
 
 		if (this.game_activity.children[0]) {
 			this.game_activity.classList.toggle('reversed')
